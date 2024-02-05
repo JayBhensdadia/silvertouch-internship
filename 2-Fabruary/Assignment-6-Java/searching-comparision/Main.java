@@ -1,5 +1,6 @@
 import java.util.Date;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 public class Main {
@@ -27,6 +28,7 @@ public class Main {
     }
 
     public static int binarySearch(ArrayList<Integer> list, int target) {
+        Collections.sort(list);
         int left = 0;
         int right = list.size() - 1;
 
