@@ -12,12 +12,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-@WebFilter(urlPatterns = "/*",asyncSupported = true)
+@WebFilter(urlPatterns = "/advanced-session-management/session-fixation",asyncSupported = true)
 public class SessionFixationFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        // Initialization code, if needed
+        
     }
 
     @Override
@@ -28,12 +28,12 @@ public class SessionFixationFilter implements Filter {
 
         HttpSession session = httpRequest.getSession();
 
-        // Check if a new session is being created or if the request is an initial login
+        
         if (session.getAttribute("sessionIdValidated")!=null && (session.isNew() ||   !session.getAttribute("sessionIdValidated").equals("true"))) {
-            // Generate a new session ID
+            
             String newSessionId = generateNewSessionId();
 
-            // Store the old session attributes
+            
             Enumeration<String> attributeNames = session.getAttributeNames();
             Map<String, Object> attributes = new HashMap<>();
 
@@ -42,33 +42,33 @@ public class SessionFixationFilter implements Filter {
                 attributes.put(attributeName, session.getAttribute(attributeName));
             }
 
-            // Invalidate the old session and create a new one with the new session ID
+            
             session.invalidate();
             session = httpRequest.getSession(true);
 
-            // Restore the old session attributes to the new session
+            
             for (Map.Entry<String, Object> entry : attributes.entrySet()) {
                 session.setAttribute(entry.getKey(), entry.getValue());
             }
 
-            // Set a flag indicating that the session ID has been validated
+            
             session.setAttribute("sessionIdValidated", "true");
 
-            // Set the new session ID in the response cookie
+            
             httpResponse.setHeader("Set-Cookie", "JSESSIONID=" + newSessionId + "; HttpOnly; SameSite=Strict");
         }
 
-        // Continue with the filter chain
+        
         chain.doFilter(request, response);
     }
 
     @Override
     public void destroy() {
-        // Cleanup code, if needed
+        
     }
 
     private String generateNewSessionId() {
-        // Generate a new random session ID (you may use a more secure method)
+        
         return UUID.randomUUID().toString().replace("-", "");
     }
 }

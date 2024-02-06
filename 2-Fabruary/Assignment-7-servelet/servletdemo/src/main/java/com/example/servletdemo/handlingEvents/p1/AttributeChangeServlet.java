@@ -17,22 +17,22 @@ public class AttributeChangeServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Set response content type
+        
         response.setContentType("text/html");
 
-        // Get the current session or create a new one if it doesn't exist
+        
         HttpSession session = request.getSession(true);
 
-        // Create an instance of AttributeChangeListener for the attribute "exampleAttribute"
+        
         AttributeChangeListener listener = new AttributeChangeListener("exampleAttribute");
 
-        // Add the listener to the session attribute
+        
         session.setAttribute("exampleAttribute", listener);
 
-        // Modify the attribute to trigger the listener
+        
         session.setAttribute("exampleAttribute", "new value");
 
-        // Remove the attribute to trigger the listener
+        
         session.removeAttribute("exampleAttribute");
     }
 }

@@ -13,9 +13,9 @@ public class RequestServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // This servlet will trigger the ServletRequestListener events
+        
 
-        // For demonstration purposes, let's print a message to the response
+        
         response.getWriter().println("Hello from request servlet!");
     }
 }

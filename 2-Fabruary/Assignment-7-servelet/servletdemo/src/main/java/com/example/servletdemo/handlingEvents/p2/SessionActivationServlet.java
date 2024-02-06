@@ -16,14 +16,14 @@ public class SessionActivationServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession(true);
 
-        // Attach an object that implements HttpSessionActivationListener
+        
         SessionActivationListener sampleActivationListener = new SessionActivationListener();
         session.setAttribute("activationListener", sampleActivationListener);
 
-        // Set a sample attribute to the session
+        
         session.setAttribute("sampleAttribute", "Hello, HttpSessionActivationListener!");
 
-        // Invalidate the session to trigger passivation and activation
+        
         session.invalidate();
 
         response.getWriter().println("Check the console for activation and passivation notifications.");

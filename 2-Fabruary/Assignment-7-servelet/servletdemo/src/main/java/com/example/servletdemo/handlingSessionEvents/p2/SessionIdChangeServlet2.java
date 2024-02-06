@@ -22,7 +22,7 @@ public class SessionIdChangeServlet2 extends HttpServlet {
         session.invalidate();
         session = request.getSession(true);
 
-        // For demonstration purposes, let's print a message to the response
+        
         response.getWriter().println("Check the console for session ID change logs.");
     }
 }

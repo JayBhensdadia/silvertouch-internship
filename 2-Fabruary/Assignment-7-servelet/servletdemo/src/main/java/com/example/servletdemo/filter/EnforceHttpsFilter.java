@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/enforce-http-filter/*"})
+@WebFilter(urlPatterns = {"/filter/enforce-http-filter"}, asyncSupported = true)
 public class EnforceHttpsFilter implements Filter {
 
     @Override

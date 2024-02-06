@@ -6,7 +6,7 @@ import jakarta.servlet.annotation.WebFilter;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
-@WebFilter("/*")
+@WebFilter(urlPatterns = {"/filter/ip-blocking"}, asyncSupported = true)
 public class IpBlockingFilter implements Filter {
 
     private Set<String> blockedIps;

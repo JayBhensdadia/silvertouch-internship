@@ -15,11 +15,11 @@ public class SessionIdChangeServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
 
-        // Invalidate and re-create the session to trigger a session ID change
+        
         session.invalidate();
         session = request.getSession(true);
 
-        // For demonstration purposes, let's print a message to the response
+        
         response.getWriter().println("Check the console for session ID change logs.");
     }
 }

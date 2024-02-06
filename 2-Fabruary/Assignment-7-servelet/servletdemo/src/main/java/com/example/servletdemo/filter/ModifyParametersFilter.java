@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.Enumeration;
 import java.io.IOException;
 
-@WebFilter("/modify2/*")
+@WebFilter(urlPatterns = {"/filter/modify2"}, asyncSupported = true)
 public class ModifyParametersFilter implements Filter {
 
     @Override
@@ -32,7 +32,7 @@ public class ModifyParametersFilter implements Filter {
             }
 
 
-//            ((HttpServletRequest) request).setParameter(paramName, paramValues);
+
         }
 
 

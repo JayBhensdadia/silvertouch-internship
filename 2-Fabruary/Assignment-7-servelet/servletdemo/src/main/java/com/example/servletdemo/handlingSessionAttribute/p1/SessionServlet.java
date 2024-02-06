@@ -15,11 +15,11 @@ public class SessionServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
 
-        // Set some session attributes with potential security issues
+        
         session.setAttribute("username", "<script>alert('XSS attack');</script>");
         session.setAttribute("email", "malicious@example.com");
 
-        // For demonstration purposes, let's print the session attributes to the response
+        
         response.getWriter().println("Username: " + session.getAttribute("username") + "<br>");
         response.getWriter().println("Email: " + session.getAttribute("email"));
     }

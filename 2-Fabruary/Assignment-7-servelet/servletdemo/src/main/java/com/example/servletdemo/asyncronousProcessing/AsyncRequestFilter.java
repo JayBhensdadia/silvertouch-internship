@@ -6,27 +6,27 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebFilter(urlPatterns = "/*",asyncSupported = true)
+@WebFilter(urlPatterns = "/async-processing/async-filter",asyncSupported = true)
 public class AsyncRequestFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        // Initialization code, if needed
+        
     }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
-        // Set headers for asynchronous support
+        
         setAsyncHeaders((HttpServletResponse) response);
 
-        // Continue with the filter chain
+        
         chain.doFilter(request, response);
     }
 
     @Override
     public void destroy() {
-        // Cleanup code, if needed
+        
     }
 
     private void setAsyncHeaders(HttpServletResponse response) {

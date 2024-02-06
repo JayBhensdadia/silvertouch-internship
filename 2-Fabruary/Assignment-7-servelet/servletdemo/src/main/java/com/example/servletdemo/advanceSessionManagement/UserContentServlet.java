@@ -16,26 +16,26 @@ public class UserContentServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Set response content type
+        
         response.setContentType("text/html");
 
-        // Get the current session or create a new one if it doesn't exist
+        
         HttpSession session = request.getSession(true);
 
-        // Get the PrintWriter object to write the HTML response
+        
         PrintWriter out = response.getWriter();
 
         out.println("<html><head><title>User Content Servlet</title></head><body>");
 
-        // Check if the user is logged in (session attribute "user" is present)
+        
         if (session.getAttribute("user") != null) {
-            // Display personalized content for the logged-in user
+            
             String username = (String) session.getAttribute("user");
             out.println("<p>Welcome back, " + username + "!</p>");
             out.println("<p>This is your personalized content.</p>");
             out.println("<p><a href=\"logout\">Logout</a></p>");
         } else {
-            // Prompt the user to log in
+            
             out.println("<p>You are not logged in. Please <a href=\"simple\">log in</a>.</p>");
         }
 

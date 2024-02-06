@@ -13,13 +13,13 @@ public class AttributeChangeListener implements HttpSessionBindingListener {
 
     @Override
     public void valueBound(HttpSessionBindingEvent event) {
-        // Attribute is added to the session
+        
         System.out.println("Attribute '" + attributeName + "' added to the session.");
     }
 
     @Override
     public void valueUnbound(HttpSessionBindingEvent event) {
-        // Attribute is removed from the session
+        
         System.out.println("Attribute '" + attributeName + "' removed from the session.");
     }
 

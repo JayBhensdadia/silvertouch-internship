@@ -5,7 +5,7 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.annotation.WebServlet;
 
 import java.io.IOException;
-@WebFilter("/*")
+@WebFilter(urlPatterns = {"/filter/logging-filter"}, asyncSupported = true)
 public class LoggingFilter implements Filter {
 
     @Override

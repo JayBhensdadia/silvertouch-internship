@@ -15,13 +15,13 @@ public class SessionAttributeServlet  extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
 
-        // Add, remove, and replace session attributes for demonstration
+        
         session.setAttribute("username", "john_doe");
         session.removeAttribute("username");
         session.setAttribute("email", "john@example.com");
         session.setAttribute("email", "john.doe@example.com");
 
-        // For demonstration purposes, let's print the session attributes to the response
+        
         response.getWriter().println("Check the console for session attribute change logs.");
     }
 }

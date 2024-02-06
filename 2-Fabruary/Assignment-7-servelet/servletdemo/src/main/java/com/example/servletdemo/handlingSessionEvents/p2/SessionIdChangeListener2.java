@@ -12,7 +12,8 @@ public class SessionIdChangeListener2 implements HttpSessionIdListener {
     }
 
     private void log(String message) {
-        // Log the message (you can customize this part based on your logging framework)
+        
         System.out.println("[Session ID Change] " + message);
     }
 }
+

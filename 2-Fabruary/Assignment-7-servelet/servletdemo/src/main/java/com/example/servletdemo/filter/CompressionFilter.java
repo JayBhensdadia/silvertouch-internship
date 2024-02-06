@@ -11,10 +11,11 @@ import java.io.IOException;
 import java.util.zip.GZIPOutputStream;
 
 @WebFilter(
-        urlPatterns = {"/*"},
+        urlPatterns = {"/filter/compression"},
         initParams = {
-                @WebInitParam(name = "compressionThreshold", value = "1024") // Set the threshold for compression in bytes
-        }
+                @WebInitParam(name = "compressionThreshold", value = "1024") 
+        },
+        asyncSupported = true
 )
 public class CompressionFilter implements Filter {
 
@@ -51,7 +52,7 @@ public class CompressionFilter implements Filter {
 
     @Override
     public void destroy() {
-        // Cleanup code, if needed
+        
     }
 
     private static class WrappedResponse extends HttpServletResponseWrapper {
