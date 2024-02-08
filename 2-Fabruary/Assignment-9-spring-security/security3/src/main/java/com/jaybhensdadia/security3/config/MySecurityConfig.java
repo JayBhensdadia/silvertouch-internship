@@ -20,9 +20,8 @@ public class MySecurityConfig {
 
         http
                 .authorizeHttpRequests(req -> req
-                        .requestMatchers("/jay").hasRole("JAY")
-                        .requestMatchers("/vijay").hasRole("VIJAY")
-                        .requestMatchers("/ajay").hasRole("AJAY")
+                        .requestMatchers("/employee/*").hasRole("EMPLOYEE")
+                        .requestMatchers("/manager/*").hasRole("MANAGER")
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults());
@@ -37,21 +36,21 @@ public class MySecurityConfig {
                 User.withDefaultPasswordEncoder()
                         .username("jay")
                         .password("jay")
-                        .roles("JAY")
+                        .roles("EMPLOYEE")
                         .build();
 
         UserDetails vijay =
                 User.withDefaultPasswordEncoder()
                         .username("vijay")
                         .password("vijay")
-                        .roles("VIJAY")
+                        .roles("MANAGER","EMPLOYEE")
                         .build();
 
         UserDetails ajay =
                 User.withDefaultPasswordEncoder()
                         .username("ajay")
                         .password("ajay")
-                        .roles("AJAY")
+                        .roles("EMPLOYEE")
                         .build();
 
 

@@ -20,16 +20,10 @@ public class MySecurityConfig{
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
 
-//        http
-//                .authorizeHttpRequests((authz) -> authz
-//                        .anyRequest().authenticated()
-//                )
-//                .httpBasic(Customizer.withDefaults());
-
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/admin").hasRole("ADMIN")
-                        .requestMatchers("/user").hasRole("USER")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/user/**").hasRole("USER")
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults());
@@ -47,7 +41,7 @@ public class MySecurityConfig{
                 User.withDefaultPasswordEncoder()
                         .username("jay")
                         .password("jay")
-                        .roles("ADMIN")
+                        .roles("ADMIN","USER")
                         .build();
 
         UserDetails user2 =

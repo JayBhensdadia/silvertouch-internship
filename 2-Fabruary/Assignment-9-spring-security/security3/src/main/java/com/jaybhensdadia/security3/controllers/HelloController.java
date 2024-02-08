@@ -6,18 +6,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HelloController {
 
-    @GetMapping("/jay")
-    public String helloJay(){
-        return "hello jay";
+    @GetMapping("/employee/work")
+    public String empWork(){
+        return "employee is working";
     }
 
-    @GetMapping("/vijay")
-    public String helloVijay(){
-        return "hello vijay";
+    @GetMapping("/employee/eat")
+    public String empEat(){
+        return "employee is on lunch break";
     }
 
-    @GetMapping("/ajay")
-    public String helloAjay(){
-        return "hello ajay";
+    @GetMapping("/manager/update")
+    public String managerUpdate(){
+        return "manager is forwarding update";
     }
+
+    @GetMapping("/manager/hire")
+    public String managerHire(){ return "manager is hiring new resource";}
 }
