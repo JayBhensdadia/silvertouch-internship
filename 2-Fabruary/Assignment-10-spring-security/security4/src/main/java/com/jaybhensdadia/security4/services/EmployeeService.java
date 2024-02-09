@@ -15,4 +15,6 @@ public interface EmployeeService {
     public void deleteEmployeeById(Long empId) throws EmployeeDoesNotExist;
 
     public Employee updateEmployeeById(Long empId, Employee employee) throws EmployeeDoesNotExist;
+
+    public Employee findEmployeeByEmail(String email) throws EmployeeDoesNotExist;
 }

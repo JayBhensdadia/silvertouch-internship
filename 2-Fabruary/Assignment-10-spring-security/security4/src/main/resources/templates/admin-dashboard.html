@@ -1,1 +1,61 @@
-<h1>Admin dashboard</h1>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+<h1>Admin Dashboard</h1>
+
+<h2>Users</h2>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.empId}"></td>
+        <td th:text="${user.empName}"></td>
+        <td th:text="${user.empEmail}"></td>
+        <td th:text="${user.empRole}"></td>
+        <td>
+            <a th:href="@{'/editUser/' + ${user.empId}}">Edit</a> |
+            <a th:href="@{'/deleteUser/' + ${user.empId}}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>Admins</h2>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="admin : ${admins}">
+        <td th:text="${admin.adminId}"></td>
+        <td th:text="${admin.adminName}"></td>
+        <td th:text="${admin.adminEmail}"></td>
+        <td th:text="${admin.adminRole}"></td>
+        <td>
+            <a th:href="@{'/editAdmin/' + ${admin.adminId}}">Edit</a> |
+            <a th:href="@{'/deleteAdmin/' + ${admin.adminId}}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

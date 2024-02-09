@@ -18,6 +18,9 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public Employee addEmployee(Employee employee) {
+
+
+
         return employeeRepo.save(employee);
     }
 
@@ -54,6 +57,17 @@ public class EmployeeServiceImpl implements EmployeeService{
         temp.setEmpCompany(employee.getEmpCompany());
         temp.setEmpBio(employee.getEmpBio());
         return employeeRepo.save(temp);
+    }
+
+
+    @Override
+    public Employee findEmployeeByEmail(String email) throws EmployeeDoesNotExist {
+        List<Employee> list = employeeRepo.findAll();
+        for (Employee e : list){
+            if(e.getEmpEmail().equals(email)){return e;}
+        }
+
+        throw new EmployeeDoesNotExist("Employee does not exists");
     }
 }
 

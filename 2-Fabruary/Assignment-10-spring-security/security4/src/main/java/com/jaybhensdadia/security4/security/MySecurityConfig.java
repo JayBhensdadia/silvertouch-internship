@@ -1,7 +1,9 @@
 package com.jaybhensdadia.security4.security;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.jaas.memory.InMemoryConfiguration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -20,23 +22,35 @@ import java.util.Map;
 public class MySecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, HttpSession session) throws Exception{
 
-        return http.formLogin(cust-> cust.loginPage("/login")).build();
 
-//        return http
-//                .csrf(csrf -> csrf.disable())
-//                .authorizeHttpRequests(req -> req
-//                        .requestMatchers("/employee/add").hasRole("ADMIN")
-//                        .anyRequest().authenticated()
-//                )
-//                .httpBasic(Customizer.withDefaults())
-//                .build();
+//        return http.formLogin(cust-> cust.loginPage("/login")).build();
 
+        return http
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(req -> req
+                        .requestMatchers("/*").hasRole("ADMIN")
+                        .anyRequest().authenticated()
+                )
+                .httpBasic(Customizer.withDefaults())
+                .build();
+
+
+
+
+
+//
+//
 //                return http
 //                        .csrf(csrf -> csrf.disable())
 //                        .authorizeHttpRequests(req -> req
 //                                .requestMatchers("/login").permitAll()
+//                                .requestMatchers("/authenticate").permitAll()
+//                                .requestMatchers("/myadmin").permitAll()
+//                                .requestMatchers("/myemployee").permitAll()
+//                                .requestMatchers("/add-employee").permitAll()
+//                                .requestMatchers("/admin").hasRole("ADMIN")
 //                                .anyRequest().authenticated()
 //                        )
 //                        .formLogin(cust -> cust.loginPage("/login"))
@@ -57,4 +71,7 @@ public class MySecurityConfig {
 
         return new InMemoryUserDetailsManager(jay);
     }
+
+
+
 }
