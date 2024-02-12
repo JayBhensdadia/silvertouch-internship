@@ -4,13 +4,19 @@ import com.jaybhensdadia.overseas.entities.Apointment;
 import com.jaybhensdadia.overseas.entities.User;
 import com.jaybhensdadia.overseas.repositories.ApointmentRepo;
 import com.jaybhensdadia.overseas.repositories.UserRepo;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -65,9 +71,43 @@ public class HomeController {
             return "consultant-about";
         }
 
+    }
 
 
 
+//    @GetMapping("/book-apointment")
+//    public String bookApointment(){
+//        return "book-apointment";
+//    }
 
+    @GetMapping("/book-apointment/{id}")
+    public String bookAppointmentById(@PathVariable("id") String consultantId, Model model){
+
+        model.addAttribute("consultantId",consultantId);
+        return "book-apointment";
+    }
+
+
+    @PostMapping("/add-apointment/{id}")
+    public String addApointment(@PathVariable("id") String consultantId,HttpServletRequest req,Principal principal) throws ParseException {
+        Integer conId = Integer.parseInt(consultantId);
+        User current = userRepo.findByEmail(principal.getName());
+        Integer userId = current.getId();
+
+        Integer id = Integer.parseInt(req.getParameter("appointmentId"));
+
+
+        System.out.println(req.getParameter("startTime"));
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+
+        Date startTime = format.parse(req.getParameter("startTime"));
+        Date endTime = format.parse(req.getParameter("endTime"));
+
+
+        Apointment apointment = new Apointment(id,userId,conId,startTime,endTime,"pending");
+        apointmentRepo.save(apointment);
+
+        return "apointment-booking-success";
     }
 }
