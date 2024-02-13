@@ -7,17 +7,20 @@ import com.jaybhensdadia.overseas.repositories.UserRepo;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -31,6 +34,7 @@ public class HomeController {
 
     @GetMapping("/signin")
     public String login(){
+        System.out.println("signin..............");
         return "login";
     }
 
@@ -55,8 +59,12 @@ public class HomeController {
             }).collect(Collectors.toList());
 
 
-            model.addAttribute("consultants",consultants);
+            List<Apointment> myApointments = apointmentRepo.findAll().stream().filter(apointment -> {
+                return apointment.getUserId() == current.getId();
+            }).collect(Collectors.toList());
 
+            model.addAttribute("consultants",consultants);
+            model.addAttribute("myapointments",myApointments);
 
             return "user-about";
         }else{
@@ -105,9 +113,114 @@ public class HomeController {
         Date endTime = format.parse(req.getParameter("endTime"));
 
 
-        Apointment apointment = new Apointment(id,userId,conId,startTime,endTime,"pending");
+        Apointment apointment = new Apointment(id,userId,conId,startTime,endTime,"scheduled");
         apointmentRepo.save(apointment);
 
-        return "apointment-booking-success";
+        return "redirect:/about";
     }
+
+
+
+    @GetMapping("/update-apointment/{id}")
+    public String updateApointment(@PathVariable("id") String apointmentId){
+        Optional<Apointment> apointment = apointmentRepo.findById(Integer.parseInt(apointmentId));
+        if(!apointment.isPresent()){throw new UsernameNotFoundException("apointment not found");}
+        else{
+            apointment.get().setStatus("complete");
+            apointmentRepo.save(apointment.get());
+            return "redirect:/about";
+        }
+
+    }
+
+
+    @GetMapping("/add-user")
+    public String addUserPage(){
+        return "add-user";
+    }
+
+
+    @PostMapping("/add-user")
+    public String addUserToDb(HttpServletRequest req){
+
+        String id = req.getParameter("id");
+        String name = req.getParameter("name");
+        String email = req.getParameter("email");
+        String password = req.getParameter("password");
+        String role = req.getParameter("role");
+
+        User user = new User(Integer.parseInt(id),name,email,new BCryptPasswordEncoder().encode(password),role);
+        userRepo.save(user);
+        return "redirect:/about";
+    }
+
+
+    @GetMapping("/delete-user/{id}")
+    public String deleteUserById(@PathVariable("id") String id){
+        userRepo.deleteById(Integer.parseInt(id));
+        return "redirect:/about";
+    }
+
+
+    @GetMapping("/edit-user/{id}")
+    public String editUserById(@PathVariable("id") String id, Model model){
+        Optional<User> usr = userRepo.findById(Integer.parseInt(id));
+        if(!usr.isPresent()){
+            throw new UsernameNotFoundException("user not found");
+        }else{
+            model.addAttribute("user", usr.get());
+
+        }
+
+
+        return "edit-user";
+    }
+
+
+    @PostMapping("/update-user/{id}")
+    public String updateUserById(@PathVariable("id") String id, HttpServletRequest req){
+
+        String name = req.getParameter("name");
+        String email = req.getParameter("email");
+        String password = req.getParameter("password");
+        String role = req.getParameter("role");
+
+
+        Optional<User> usr = userRepo.findById(Integer.parseInt(id));
+        if(!usr.isPresent()){
+            throw  new UsernameNotFoundException("user not found");
+        }else{
+
+            User old = usr.get();
+            old.setName(name);
+            old.setEmail(email);
+            old.setPassword(new BCryptPasswordEncoder().encode(password));
+            old.setRole(role);
+
+            userRepo.save(old);
+        }
+
+        return "redirect:/about";
+    }
+
+
+    @GetMapping("/signup")
+    public String signup(){
+        return "signup";
+    }
+
+    @PostMapping("/register-user")
+    public String register(HttpServletRequest req){
+        System.out.println("---------------------------------------------");
+        Integer id = Integer.parseInt(req.getParameter("id"));
+        String name = req.getParameter("name");
+        String email = req.getParameter("email");
+        String password = req.getParameter("password");
+        String role = req.getParameter("role");
+
+        User user = new User(id,name,email,new BCryptPasswordEncoder().encode(password),role);
+        userRepo.save(user);
+        return "redirect:/signin";
+    }
+
 }

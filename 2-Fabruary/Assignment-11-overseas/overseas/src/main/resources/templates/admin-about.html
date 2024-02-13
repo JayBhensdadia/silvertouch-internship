@@ -11,16 +11,19 @@
     <title>Bootstrap Example</title>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
-<body class="p-3 m-0 border-0 bd-example m-0 border-0">
+<body class="p-3 m-0 border-0 bd-example m-0 border-0 font-monospace ">
 
 <!-- Example Code -->
 
 <div class="d-flex flex-row justify-content-center align-items-center">
-    <div class="container-sm">
+    <div class="container border border-2 rounded p-5 shadow-sm bg-light">
 
-        <h1>Admin About</h1>
+        <div class="d-flex flex-row justify-content-between pb-5">
+            <h2 class="fw-bold ">All Users List</h2>
+            <a th:href="@{/add-user}" class="btn btn-primary align-self-center ">Add + </a>
+        </div>
 
-        <table  class="table">
+        <table  class="table table-light ">
             <thead>
             <tr>
                 <th>ID</th>
@@ -42,8 +45,8 @@
                 <td>
                     <!--                <button type="button" class="btn btn-primary" th:href="@{/edit-user}">Edit</button>-->
                     <!--                <button type="button" class="btn btn-primary">Delete</button>-->
-                    <a th:href="@{/dhoom}" class="btn btn-primary">Edit</a>
-                    <a th:href="@{/dhoom}" class="btn btn-danger">Delete</a>
+                    <a th:href="@{/edit-user/{id}(id=${user.id})}" class="btn btn-primary">Edit</a>
+                    <a th:href="@{/delete-user/{id}(id=${user.id})}" class="btn btn-danger">Delete</a>
                     <!--                    <a th:href="@{/delete-user/{id}(id=${user.id})}" class="btn btn-primary">Delete</a>-->
                     <!--            <a th:href="@{}">Delete</a>-->
                 </td>
