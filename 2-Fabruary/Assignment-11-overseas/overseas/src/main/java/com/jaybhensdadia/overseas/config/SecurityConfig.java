@@ -40,6 +40,9 @@ public class SecurityConfig {
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/signup").permitAll()
                         .requestMatchers("/register-user").permitAll()
+                        .requestMatchers("/add-user/**").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/delete-user/**").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/update-user/**").hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(cust -> cust

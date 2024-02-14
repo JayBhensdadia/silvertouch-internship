@@ -134,6 +134,19 @@ public class HomeController {
     }
 
 
+
+    @GetMapping("/update-apointment/reject/{id}")
+    public String rejectApointment(@PathVariable("id") String apointmentId){
+        Optional<Apointment> apointment = apointmentRepo.findById(Integer.parseInt(apointmentId));
+        if(!apointment.isPresent()){throw new UsernameNotFoundException("apointment not found");}
+        else{
+            apointment.get().setStatus("reject");
+            apointmentRepo.save(apointment.get());
+            return "redirect:/about";
+        }
+
+    }
+
     @GetMapping("/add-user")
     public String addUserPage(){
         return "add-user";
