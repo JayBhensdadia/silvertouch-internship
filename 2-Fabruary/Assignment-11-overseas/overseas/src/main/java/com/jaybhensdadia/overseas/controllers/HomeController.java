@@ -143,6 +143,9 @@ public class HomeController {
             apointment.get().setStatus("reject");
             apointmentRepo.save(apointment.get());
             return "redirect:/about";
+
+
+            
         }
 
     }
