@@ -1,0 +1,9 @@
+lst1=[1,2,3,4,5]
+lst2=[4,5,6,7]
+set1=set(lst1)
+set2=set(lst2)
+set3=set1.difference(set2)
+set4=set2.difference(set1)
+setRes=set3.union(set4)
+lstRes=list(setRes)
+print(lstRes)
